@@ -1,0 +1,150 @@
+using System;
+
+namespace ConsoleApp2
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string NomJoueur1, NomJoueur2, Joueur1, Joueur2;
+            int cpt = 0, pb = 0, PositionJ1 = 0, PositionJ2 = 0, SommeDés, NouvellePositionJ1, NouvellePositionJ2, Compteur=0 ;
+            bool CaseOieJ1=false, CaseOieJ2 = false;
+
+
+            Console.WriteLine("Bienvenue dans le jeu de L\'oie");
+            Console.WriteLine("Ce jeu se joue à deux joueurs, les regles sont les suivantes : ");
+            Console.WriteLine("Le premier joueur qui arrive à la position 63 gagne la partie!");
+            Console.WriteLine("Passer sur l\'une des cases \"oie\" (multiples de 9) vous permet de rejouer. ");
+            Console.WriteLine("Mais attention ! Tomber sur la case 58 \"Tête de mort\" Vous fait revenir à la case départ.");
+            Console.WriteLine("Commencons. Joueur 1 entrez votre nom. ");
+            NomJoueur1 = Console.ReadLine();
+            Console.WriteLine("Très bien "+NomJoueur1+" ! C\'est maintenant au Joueur 2 d'entrer son nom.");
+            NomJoueur2 = Console.ReadLine();
+            Console.WriteLine("Pour determiner qui de "+NomJoueur1+" ou "+NomJoueur2+" commence, vous allez tous les deux lancer un dé.");
+            Console.WriteLine("Celui qui obtient le plus grand nombre commence la partie !");
+            Console.WriteLine(NomJoueur1+" Appuyez sur une touche pour lancer le dé");
+            Console.ReadKey();
+            Random rnd = new Random();
+            int dé00 = rnd.Next(1, 7);
+            Console.WriteLine(NomJoueur1 + " Vient de faire "+dé00+" Essayez de faire plus "+NomJoueur2+" !");
+            Console.WriteLine(NomJoueur2 + " Appuyez sur une touche pour lancer le dé");
+            Console.ReadKey();
+            int dé01 = rnd.Next(1, 7);
+            Console.WriteLine(NomJoueur2 + " Vient de faire " + dé01 +" !");
+            if(dé00!=dé01)
+            {
+                if(dé00>dé01)
+                {
+                    Console.WriteLine(dé00+" étant plus grand que "+dé01+" C'est donc "+NomJoueur1+" qui commence la partie.");
+                    Joueur1 = NomJoueur1;
+                    Joueur2 = NomJoueur2;
+                }
+                else
+                {
+                    Console.WriteLine(dé01 + " étant plus grand que " + dé00 + " C'est donc " + NomJoueur2 + " qui commence la partie.");
+                    Joueur1 = NomJoueur2;
+                    Joueur2 = NomJoueur1;
+                }
+            }
+            else
+            {
+                while(dé00==dé01)
+                {
+                    Console.WriteLine("Vous venez de faire une égalité, vous devez donc tous les deux relancer le dé");
+                    Console.WriteLine(NomJoueur1 + " Appuyez sur une touche pour lancer le dé");
+                    Console.ReadKey();
+                    Random rnd1 = new Random();
+                    dé00 = rnd1.Next(1, 7);
+                    Console.WriteLine(NomJoueur1 + " Vient de faire " + dé00 + " Essayez de faire plus " + NomJoueur2 + " !");
+                    Console.WriteLine(NomJoueur2 + " Appuyez sur une touche pour lancer le dé");
+                    Console.ReadKey();
+                    dé01 = rnd1.Next(1, 7);
+                    Console.WriteLine(NomJoueur2 + " Vient de faire " + dé01 + " !");
+                }
+                if (dé00 > dé01)
+                {
+                    Console.WriteLine(dé00 + " étant plus grand que " + dé01 + " C'est donc " + NomJoueur1 + " qui commence la partie.");
+                    Joueur1 = NomJoueur1;
+                    Joueur2 = NomJoueur2;
+                }
+                else
+                {
+                    Console.WriteLine(dé01 + " étant plus grand que " + dé00 + " C'est donc " + NomJoueur2 + " qui commence la partie.");
+                    Joueur1 = NomJoueur2;
+                    Joueur2 = NomJoueur1;
+                } 
+            }
+            Console.WriteLine("Que les jeux commencent !");
+            while(PositionJ1!=63&&PositionJ2!=63)
+            {
+                if((cpt==pb||CaseOieJ1==true) && CaseOieJ2==false)
+                {
+                    Console.WriteLine(Joueur1 + " lancez votre 1er dé, en appuyant sur une touche.");
+                    Console.ReadKey();
+                    int dé1 = rnd.Next(1, 7);
+                    Console.WriteLine(Joueur1 + " Vous venez de faire " + dé1);
+                    Console.WriteLine(Joueur1 + " lancez votre 2nd dé, en appuyant sur une touche.");
+                    Console.ReadKey();
+                    int dé2 = rnd.Next(1, 7);
+                    Console.WriteLine(Joueur1 + " Vous venez de faire " + dé2);
+                    SommeDés = dé1 + dé2;
+                    Console.WriteLine(Joueur1 + " Vient de faire "+SommeDés);
+                    PositionJ1 = PositionJ1 + SommeDés;
+                    CaseOieJ1 = false;
+                    if(PositionJ1==9||PositionJ1==18||PositionJ1==27||PositionJ1==36||PositionJ1==45||PositionJ1==54)
+                    {
+                        Console.WriteLine(Joueur1 + " est arrivé(e) sur une case Oie, il/elle peut rejouer");
+                        CaseOieJ1 = true;
+                    }
+                    if(PositionJ1>63)
+                    {
+                        NouvellePositionJ1 = PositionJ1 - 63;
+                        PositionJ1 = 63 - NouvellePositionJ1;
+                    }
+                    Console.WriteLine(Joueur1+" Est arrivé(e) à la case N."+PositionJ1);
+                    cpt = cpt + 1;
+                }
+                if ((cpt != pb || CaseOieJ2 == true) && CaseOieJ1==false)
+                {
+                    Console.WriteLine(Joueur2 + " lancez votre 1er dé, en appuyant sur une touche.");
+                    Console.ReadKey();
+                    int dé1 = rnd.Next(1, 7);
+                    Console.WriteLine(Joueur2 + " Vous venez de faire "+dé1);
+                    Console.WriteLine(Joueur2 + " lancez votre 2nd dé, en appuyant sur une touche.");
+                    Console.ReadKey();
+                    int dé2 = rnd.Next(1, 7);
+                    Console.WriteLine(Joueur2 + " Vous venez de faire " + dé2);
+                    SommeDés = dé1 + dé2;
+                    Console.WriteLine(Joueur2 + " Vient de faire " + SommeDés);
+                    PositionJ2 = PositionJ2 + SommeDés;
+                    CaseOieJ2 = false;
+                    if (PositionJ2 == 9 || PositionJ2 == 18 || PositionJ2 == 27 || PositionJ2 == 36 || PositionJ2 == 45 || PositionJ2 == 54)
+                    {
+                        Console.WriteLine(Joueur2 + " est arrivé(e) sur une case Oie, il/elle peut rejouer");
+                        CaseOieJ2 = true;
+                    }
+                    if (PositionJ2 > 63)
+                    {
+                        NouvellePositionJ2 = PositionJ2 - 63;
+                        PositionJ2 = 63 - NouvellePositionJ2;
+                    }
+                    Console.WriteLine(Joueur2 + " Est arrivé(e) à la case N." + PositionJ2);
+                    cpt = pb;
+                }
+                Compteur = Compteur + 1;
+                Console.WriteLine("Le tour N."+Compteur+" vient de se terminer, execution du tour suivant.");
+
+            }
+            if (PositionJ1 == 63)
+            {
+                Console.WriteLine(Joueur1+" est arrivé(e) à la case 63! il/elle remporte la partie");
+            }
+            if (PositionJ2==63)
+            {
+                Console.WriteLine(Joueur2+" est arrivé(e) à la case 63! il/elle remporte la partie");
+            }
+            Console.WriteLine("Le jeu est terminé Félicitations ! Appuyez sur une touche pour fermer la console");
+            Console.ReadKey();
+        }
+    }
+}
